@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Generate JSON schema from data",
    "author" : [
       "aereal <aereal@aereal.org>"
    ],
@@ -42,16 +42,31 @@
       },
       "runtime" : {
          "requires" : {
+            "JSON::TypeInference" : "0",
+            "List::MoreUtils" : "0",
             "perl" : "5.008001"
          }
       },
       "test" : {
          "requires" : {
+            "Devel::Cover" : "0",
+            "Devel::Cover::Report::Coveralls" : "0",
             "Test::More" : "0.98"
          }
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/aereal/JSON-Schema-Generator/issues"
+      },
+      "homepage" : "https://github.com/aereal/JSON-Schema-Generator",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/aereal/JSON-Schema-Generator.git",
+         "web" : "https://github.com/aereal/JSON-Schema-Generator"
+      }
+   },
    "version" : "0.01",
    "x_authority" : "cpan:AEREAL"
 }

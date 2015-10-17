@@ -20,6 +20,7 @@ sub process {
     properties => {
       map { ($_ => $dispatch->($properties->{$_}, $examples_by_prop->{$_})) } keys %$properties,
     },
+    required => [ sort map { $_ } grep { ! $properties->{$_}->isa('JSON::TypeInference::Type::Maybe') } keys %$properties ],
   };
 }
 

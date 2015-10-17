@@ -25,28 +25,27 @@ sub learn {
 sub generate {
   my ($self) = @_;
   my $inferred_type = JSON::TypeInference->infer($self->{learned_data});
-  my $example_data = $self->{learned_data}->[0];
   return {
     '$schema'   => 'http://json-schema.org/draft-04/schema#',
     title       => 'TODO',
     description => 'TODO',
-    %{_dispatch($inferred_type, $example_data)},
+    %{_dispatch($inferred_type, $self->{learned_data})},
   };
 }
 
 sub _dispatch {
-  my ($type, $example_data) = @_;
+  my ($type, $examples) = @_;
   my $dispatch = \&_dispatch;
   if ($type->name eq 'array') {
-    return JSON::Schema::Generator::Handler::Array->process($type, $example_data, $dispatch);
+    return JSON::Schema::Generator::Handler::Array->process($type, $examples, $dispatch);
   } elsif ($type->name eq 'object') {
-    return JSON::Schema::Generator::Handler::Object->process($type, $example_data, $dispatch);
+    return JSON::Schema::Generator::Handler::Object->process($type, $examples, $dispatch);
   } elsif ($type->name eq 'union') {
-    return JSON::Schema::Generator::Handler::Union->process($type, $example_data, $dispatch);
+    return JSON::Schema::Generator::Handler::Union->process($type, $examples, $dispatch);
   } elsif ($type->name eq 'maybe') {
-    return JSON::Schema::Generator::Handler::Maybe::Lifted->process($type, $example_data, $dispatch);
+    return JSON::Schema::Generator::Handler::Maybe::Lifted->process($type, $examples, $dispatch);
   } else {
-    return JSON::Schema::Generator::Handler::Atom->process($type, $example_data, $dispatch);
+    return JSON::Schema::Generator::Handler::Atom->process($type, $examples, $dispatch);
   }
 }
 

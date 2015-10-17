@@ -4,10 +4,10 @@ use strict;
 use warnings;
 
 sub process {
-  my ($class, $array_type, $example_data, $dispatch) = @_;
+  my ($class, $array_type, $examples, $dispatch) = @_;
   return +{
     type  => $array_type->name,
-    items => $dispatch->($array_type->element_type, $example_data->[0]),
+    items => $dispatch->($array_type->element_type, $examples->[0]),
   };
 }
 

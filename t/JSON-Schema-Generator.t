@@ -6,9 +6,9 @@ use Types::Serialiser;
 require_ok 'JSON::Schema::Generator';
 
 my $generator = JSON::Schema::Generator->new;
-$generator->learn({ id => 1, name => 'yuno' });
-$generator->learn({ id => 2, name => 'miyako' });
-$generator->learn({ id => 3, name => 'sae', is_megane => Types::Serialiser::true });
+$generator->learn({ id => 1, name => 'yuno', magic => 1, career => ['a', 'b'] });
+$generator->learn({ id => 2, name => 'miyako', magic => 'a', career => ['a'] });
+$generator->learn({ id => 3, name => 'sae', is_megane => Types::Serialiser::true, magic => 3, career => ['a', 'b', 'c'] });
 my $schema = $generator->generate();
 
 is_deeply $schema, {
@@ -27,7 +27,18 @@ is_deeply $schema, {
     },
     is_megane => {
       type    => 'boolean',
-      example => undef,
+      example => Types::Serialiser::true,
+    },
+    magic => {
+      type    => ['number', 'string'],
+      example => 1,
+    },
+    career => {
+      type  => 'array',
+      items => {
+        type    => 'string',
+        example => 'a',
+      },
     },
   },
 };

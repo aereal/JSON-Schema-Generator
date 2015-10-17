@@ -4,10 +4,10 @@ use strict;
 use warnings;
 
 sub process {
-  my ($class, $atom_type, $example_data, $dispatch) = @_;
+  my ($class, $atom_type, $examples, $dispatch) = @_;
   return +{
     type => $atom_type->name,
-    ($atom_type->isa('JSON::TypeInference::Type::Unknown') ? () : (example => $example_data)),
+    ($atom_type->isa('JSON::TypeInference::Type::Unknown') ? () : (example => $examples->[0])),
   };
 }
 

@@ -1,0 +1,6 @@
+name = "JSON-Schema-Generator"
+badges = ["travis", "coveralls"]
+authority="cpan:AEREAL"
+
+module_maker="ModuleBuildTiny"
+

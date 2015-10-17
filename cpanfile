@@ -1,5 +1,7 @@
 requires 'perl', '5.008001';
 
+requires 'JSON::TypeInference';
+
 on 'test' => sub {
     requires 'Devel::Cover';
     requires 'Devel::Cover::Report::Coveralls';

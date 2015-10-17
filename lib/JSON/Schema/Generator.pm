@@ -5,7 +5,50 @@ use warnings;
 
 our $VERSION = "0.01";
 
+use JSON::Schema::Generator::Handler::Array;
+use JSON::Schema::Generator::Handler::Atom;
+use JSON::Schema::Generator::Handler::Maybe::Lifted;
+use JSON::Schema::Generator::Handler::Object;
+use JSON::Schema::Generator::Handler::Union;
+use JSON::TypeInference;
 
+sub new {
+  my ($class) = @_;
+  return bless { learned_data => [] }, $class;
+}
+
+sub learn {
+  my ($self, $data) = @_;
+  push @{$self->{learned_data}}, $data;
+}
+
+sub generate {
+  my ($self) = @_;
+  my $inferred_type = JSON::TypeInference->infer($self->{learned_data});
+  my $example_data = $self->{learned_data}->[0];
+  return {
+    '$schema'   => 'http://json-schema.org/draft-04/schema#',
+    title       => 'TODO',
+    description => 'TODO',
+    %{_dispatch($inferred_type, $example_data)},
+  };
+}
+
+sub _dispatch {
+  my ($type, $example_data) = @_;
+  my $dispatch = \&_dispatch;
+  if ($type->name eq 'array') {
+    return JSON::Schema::Generator::Handler::Array->process($type, $example_data, $dispatch);
+  } elsif ($type->name eq 'object') {
+    return JSON::Schema::Generator::Handler::Object->process($type, $example_data, $dispatch);
+  } elsif ($type->name eq 'union') {
+    return JSON::Schema::Generator::Handler::Union->process($type, $example_data, $dispatch);
+  } elsif ($type->name eq 'maybe') {
+    return JSON::Schema::Generator::Handler::Maybe::Lifted->process($type, $example_data, $dispatch);
+  } else {
+    return JSON::Schema::Generator::Handler::Atom->process($type, $example_data, $dispatch);
+  }
+}
 
 1;
 __END__

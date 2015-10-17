@@ -41,6 +41,7 @@ is_deeply $schema, {
       },
     },
   },
+  required => [ sort 'id', 'name', 'magic', 'career' ],
 };
 
 done_testing;

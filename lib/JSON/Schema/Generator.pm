@@ -56,15 +56,25 @@ __END__
 
 =head1 NAME
 
-JSON::Schema::Generator - It's new $module
+JSON::Schema::Generator - Generate JSON schema from data
 
 =head1 SYNOPSIS
 
     use JSON::Schema::Generator;
+    my $generator = JSON::Schema::Generator->new;
+    $generator->learn({ id => 1, name => 'yuno'  });
+    $generator->learn({ id => 2, name => 'miyako' });
+    $generator->learn({ id => 3, name => 'sae'  });
+    my $schema = $generator->generate;
 
 =head1 DESCRIPTION
 
-JSON::Schema::Generator is ...
+JSON::Schema::Generator generate a JSON schema from actual data.
+
+It supports:
+
+  * type inference (using L<JSON::TypeInference>)
+  * embedding example values
 
 =head1 LICENSE
 

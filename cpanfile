@@ -9,3 +9,7 @@ on 'test' => sub {
     requires 'Test::More', '0.98';
 };
 
+feature 'demo' => sub {
+  requires 'Getopt::Long';
+  requires 'JSON::XS';
+};
